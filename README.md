@@ -4,7 +4,7 @@ Notes from:
 1. JavaScript Data Structures and Algorithms Masterclass by Colt Steele
 
 # Table of Contents
-1. Big O Notation
+1. [Big O Notation](./BIG_O_NOTATION.md)
 2. Analyzing Performance of Arrays and Objects
 3. Problem Solving Approach
 4. Problem Solving Patterns
