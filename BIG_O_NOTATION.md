@@ -28,7 +28,7 @@ There are various ways to do this:
 
 Big O Notation can be seen as a system for classifying the efficiency of code with generalized labels.
 
-![Big O Classification](/images/big-o-classifying-scale.png)
+![Big O Classification](images/big-o-classifying-scale.png)
 *We can compare algorithms with Big O Notation*
 
 Instead of having color or words, we can have a **numeric representation** to measure our code.
@@ -68,7 +68,7 @@ function addUpToOptimized(n) {
 [see addUpTo.js](./code/addUpTo.js)
 [see repl.it](https://repl.it/@tesla809/AddUpTojs)
 
-![better addition algorithm proof](./images/better-addition-algorithm-proof.png)
+![better addition algorithm proof](images/better-addition-algorithm-proof.png)
 *Proof of better addition algorithm*
 ```addUpToOptimized()``` is less intuitive and mathematical. No loops, but there is a proof that validates that it works. Since there isn't a loop, its faster and more efficient than the naive solution.
 
@@ -99,17 +99,18 @@ function addUpToOptimized(n) {
   return n * (n + 1) / 2;
 }
 
-// if working in browser
+// Using a timer a naive way to test efficiency of code
+// if in browser
 let t1 = perfromance.now();
 addUpTo(100000000);
 let t2 = performance.now()
 console.log(`Time elapse: ${(t2 - t1) / 1000}seconds`);
 
-// if working in NodeJS
+// if in NodeJS
 const ONE_BILLION = 1000000000;
 
 // naive solution
-let t1 = process.hrtime.bigint();
+let t1 = process.hrtime.bigint();  // returns nanoseconds
 addUpToNaive(100000000);
 let t2 = process.hrtime.bigint();
 console.log(`Naive Time elapse: ${parseInt(t2 - t1) / ONE_BILLION } seconds`);
@@ -119,9 +120,53 @@ let t3 = process.hrtime.bigint();
 addUpToOptimized(100000000);
 let t4 = process.hrtime.bigint();
 console.log(`Optimized Time elapse: ${parseInt(t4 - t3) / ONE_BILLION }seconds`);
-
-
 ```
+
+The duration of the optimized version is SIGNIFICANTLY shorter than the naive solution. This means savings in time, money, and computation.
+
+However, the process of manually timing things before and after is not reliable. There can be variability in execution, some computers can be faster than other. It gives us a false sense of precision. 
+
+## The Problem with Time
+1. *Different* machines will record different time.
+2. The *same* machine will record different times.
+3. For fast algorithms speed measurements may not be precise enough. Its hard to gauge effectiveness since we can't really difference in improvement to compare.
+
+**Timing your code is useful, but not the most effective way to compare algorithms.** What if your code takes hours to run? There needs to be a more effective way to talk about code in general terms. So, we use Big O Notation.
+
+## If Not Time, Then What?
+**DON'T**- Count seconds, which are variable within and between machines.
+
+**DO**- Count *number* of simple operations the computer has to perform. That remains *constant* no matter the computer specs.
+
+## Counting Operations
+**Small amount of operations equals to faster algorithm**
+![counting operations of optimized algo](images/counting-operations-optimized-algo.png)
+*It doesn't matter if n is 1 billion or 10. There are only **three** operations occuring.*
+
+**More operations equals to slower algorithm**
+![counting operations of naive algo](images/counting-operations-naive-algo.png)
+
+*Using a loop increases our operations to n times.*
+
+**If we have variable amount of operations *n*, how do we count it?**
+
+![counting-is-hard](images/counting-is-hard.png)
+
+**Key Idea:**
+We don't care about counting every simple step precisely. 
+
+We focus on the big picture.
+
+We care about the general trend of how the algorithm grows and scales.
+
+**For our naive solution, as **n** grows, the number of operations grows roughly linearly.**
+
+
+What matters are the leading coefficent, i.e. the highest order coefficent in the polynomial.
+
+
+
+
 
 **Time complexity**:
 **Space complexity**:
