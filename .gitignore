@@ -1,5 +1,7 @@
 # Mac OS file system
 .DS_Store
+images/.DS_Store
+code/.DS_Store
 
 # Logs
 logs
