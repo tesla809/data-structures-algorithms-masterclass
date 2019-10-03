@@ -15,7 +15,7 @@ There are many ways to solve a problem. We can also have different implementatio
 
 **We use Big O Notation to compare algorithms.**
 
-**Big O Notation**: Used in the analysis of algorithms to measure its efficency. It establishes a way to compare and talk about algorithms, irrespective of what machine they run on.
+**Big O Notation**: Used in the analysis of algorithms to measure its efficency. It establishes a way to compare and talk about algorithms, irrespective of what machine they run on. We look at the worst case scenario of the algorithm's running time.
 
 It is a way of generalizing our code so that we can determine.
 
@@ -161,13 +161,189 @@ We care about the general trend of how the algorithm grows and scales.
 
 **For our naive solution, as **n** grows, the number of operations grows roughly linearly.**
 
+## Performance tracker
+![Performance tracker over two algorithms](images/performance-tracker-add.png)
+*Notice how our number of inputs grows and yet the runtime scales nearly at constant time, meaning it doesn't really change. This is the best sort of algorithm.*
+[Check the Performance tracker to visually see how a select group of algoruthms scale](https://rithmschool.github.io/function-timer-demo/)
 
-What matters are the leading coefficent, i.e. the highest order coefficent in the polynomial.
+
+## Big O Notation
+Some ways to define Big O Notation:
+1. A way to formalize fuzzy counting.
+
+2. A way of describing the relationship between the change in input and how that changes the runtime of the algorithm.
+
+3. A way that allows us to talk formally about how the runtime of an algorithm grows as inputs grow.
+
+4. An algorithm is **O(f(n))** if the number of simple operations the computer has to do is eventually less than a constant times **f(n)**, as n increases. The worst case scenario aka the upper bound for the  algorithm's running time is used.
+
+## Different ways functions scale
+**Constant**: f(n) = 1
+As inputs grow, the runtime stays about the same. Probably the best one.
+
+**Linear**: f(n) = n
+As input grows by n, the runtime grows by n.
+
+**Quadratic**: f(n) = n^2
+As input grows by n, the runtime grows at n squared. So it gets really big, really fast.
+Not the best solution.
+
+f(n)- ???: something entirely different
+¯\\_(ツ)_/¯ ????
+
+A good way to remeber Big O Notation: When *n* grows, how does the algorithm grow with it?
+
+## Example of Big O Notation on algorithms
+
+```javascript
+function addUpToOptimized(n) {
+  return n * (n + 1) / 2;
+}
+```
+*Always about 3 simple operations
+O(1)*
 
 
+```javascript
+function addUpToNaive(n) {
+  let total = 0;  // accumulator
+  for (let i = 1; i <= n; i++) {
+    total += i;  // loop over
+  }
+  return total;
+}
+```
+*Number of operations is (eventually) bounded by multiple of n (i.e. 10n)
+O(n)*
+
+We don't care about the broad details, only the broad trend.
+
+So if its 10n or 100n, it doesn't matter. Its the same at large numbers, so its N.
+
+## Another example
+```javascript
+function countUpAndDown(n) {
+  console.log("Going up!");
+  // O(n)
+  for (let i = 0; i < n; i++) {
+    console.log(i);
+  }
+  console.log("At the top!\n Going down...");
+  // O(n)
+  for (let j = n - 1; j >= 0; j--) {
+    console.log(j);
+  }
+  console.log("Back down. Bye!");
+}
+```
+[see file](code/countUpAndDown.js)
+
+O(n) + O(n) = O(2n) 
+Since we only care about the big picture, we just generalize it to
+O(n).
+
+```javascript
+// will print all the pairs from 0 to n
+// 0 1, ... 1,0 ... n,n 
+function printAllPairs(n) {
+  // O(n)
+  for (var i = 0; i < n; i++) {
+    // for every n in O(n), O(n)
+    // O(n) * O(n) = O(n * n) = O(n^2)
+    for (var j = 0; j < n; j++) {
+      console.log(i, j);
+    }
+  }
+}
+```
+[see file](code/print-all-pairs-visual.js)
+![print-all-pairs-visual](images/print-all-pairs-visual.png)
+
+O(n) operation within an O(n) operation.
+Its Nested loop. Since the loops are nested, as n grows, the number of n within n grows.
+So it grows exponentially. It's runtime is f(n^2).
+
+## Simplifying Big O Expressions 
+**Rules of thumb to simplify  Big O Expressions**
+As inputs scale to infinity, the constants and smaller terms don't matter.
+
+1. Constants don't matter.
+O(500) -> O(1)
+O(2n) -> O(n)
+O(13n^2) -> O(n^2)
+
+2. Smaller terms don't matter.
+O(n + 10) -> O(n)
+O(1000n + 50) -> O(n)
+O(n^2 + 5n + 8) -> O(n^2)
+
+What matters is the leading coefficent, i.e. the highest order coefficent in the polynomial.
+n^2 + 10n + 20 -> O(n^2)
+
+**Big O shorthands**
+These don't always work, but they are pretty good .
+
+1. Arithmetic operations are constant.
+
+2. Variable assignment is constant.
+
+3. Accessing elements in an array (by index) or object (by key) is constant.
+
+4. In a loop,the complexity is the length of the loop TIMES the complexity of whatever happens inside the loop.
+
+**General Trend of algorithms**
+![Big O General Trend of Algorithms](images/Big-O-General-Trend-Of-Algorithms.png)
+
+## A Couple More Examples
+**Logs at least 5 or more**
+```javascript
+// prints numbers at a min 1-5.
+// goes from either 5 or n
+// which ever is larger
+function logAtLeast5(n) {
+  for (var i = 1; i <= Math.max(5, n); i++) {
+    console.log(i);
+  }
+}
+```
+*Big O is O(n)*
+[see file](code/logAtLeastAndMost5.js)
+
+**Logs at most 5 or less**
+```javascript
+// prints numbers at a max 5.
+// goes from either 5 or n
+// which ever is smaller
+function logAtMost5(n) {
+  for (var i = 1; i <= Math.min(5, n); i++) {
+    console.log(i);
+  }
+}
+```
+*Big O is O(1)*
+[see file](code/logAtLeastAndMost5.js)
+
+We care about what happens to *n* as it grows to infinity in its worst case scenerio.
+
+So far we have explained Big O notation in terms of time complexity. 
+
+**Time complexity**: How can we analyze the *runtime* of an algorithm runs as the size of the inputs increase.
+
+## Space complexity
+We can also use Big O notation to analyze space complexity.
+
+**Space complexity**: How much additional memory do we need to allocate in order to run the code in our algorithm?
+
+**What about the inputs**
+As the n grows, the size of the input will grow. We will ignore the input. 
+
+Sometimes you'll hear the term **auxiliary space complexity** to refer to **the space required by the algorithm, NOT including the space taken up by the inputs**.
+
+We care about the algorithm itself, not the inputs.
+
+Unless otherwise noted, when we talk about space we'll be talking about auxiliary space complexity. We are focusing on what happens INSIDE the algorithm, not the inputs.
+
+## Space Complexity in JS
 
 
-
-**Time complexity**:
-**Space complexity**:
 **Logarithm**: The opposite of an exponent.
