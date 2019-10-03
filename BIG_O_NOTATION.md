@@ -307,6 +307,7 @@ function logAtLeast5(n) {
 }
 ```
 *Big O is O(n)*
+
 [see file](code/logAtLeastAndMost5.js)
 
 **Logs at most 5 or less**
@@ -344,6 +345,116 @@ We care about the algorithm itself, not the inputs.
 Unless otherwise noted, when we talk about space we'll be talking about auxiliary space complexity. We are focusing on what happens INSIDE the algorithm, not the inputs.
 
 ## Space Complexity in JS
+**Rules of Thumb**
+
+1. Most primitives (booleans, numbers, undefined, null) are constant space.
+
+2. Strings require O(n) space (where n is string length).
+
+3. Reference types (arrays or objects) are generally O(n), where n is the length (for arrays) or number of keys (for objects).
+
+**Examples of Space Complexity**
+Looking at space complexity
+```javascript
+function sum(arr) {
+  let total = 0;
+  for (let i = 0; i < arr.length; i++){
+    total += arr[i];
+  }
+  return total;
+}
+```
+*O(1) space*
+Our total number of space is two: i and total.
+Total is only counted once, even though its updated.
+
+The input amount doesn't matter, since we are looking at space taken up in the algorithm. We aren't creating new variables based on the length.
+
+![space complexity of sum function](images/space-complexity-sum-function.png)
+
+**Another example**
+array directly in proportion to the input. 
+```javascript 
+function double(arr) {
+  let newArr = [];
+  for (let i = 0; i < arr.length; i++) {
+    newArr.push(2 * arr[i]);
+  }
+  return newArr;
+}
+```
+*O(n)*
+
+[see file](code/doubleArr.js)
+![space complexity of double function](images/space-complexity-double-function.png)
+
+## Logarithms
+Common complexities: O(1), O(n), O(n^2).
+
+There are some other Big O expressions that have more complex math. One of those is the logarithm.
+
+**Logarithm**: The inverse of exponentation. Logarithms and exponents are opposites of each other.
+
+Log2(8) = 3
+Can be read as:
+Two to *what power* equals 8?
+Or 2^x = 8 -> 2^3 = 8
+
+logBase(value) = exponent -> base^exponent = value
+
+The most common logorithm is log2 and log10. But it can be any number, even [logE]((see: https://en.wikipedia.org/wiki/Natural_logarithm).
+
+We care about the big picture and omit the 2.
+So, log === log2.
+
+As the algorithm scales, the log doesn't matter. **We care about the general trend**.
+
+The short hand is just log.
+
+### Logorithm Rule of Thumb
+The logarithm of a number *roughly* measures the number of times you can divide the number by 2 **before you get a value that's less than or equal to one**.
+
+![logarithm estimation method](images/logarithm-estimation-method.png)
+
+### O(log n) is Fantastic!
+![Big O General Trend of Algorithms](images/Big-O-General-Trend-Of-Algorithms.png)
+
+## Who Cares?
+1. Certain searching algorithms have logarithmic time complexity.
+
+2. Efficient sorting algorithms involve logarithms.
+
+3. Recursion sometimes involves logarithmic space complexity.
+
+**Stick to the picture aboe and use it for every algorithm**
+
+## RECAP
+1. We use Big O Notation to analyze the performance of an algorithm
+
+2. Big O Notation gives a high level understanding of time or space complexity of an algorithm.
+
+3. Big O notation doesn't care about precision, only about general trends: linear, quadratic, constant
+
+4. Time or space complexity (measured by Big O) depends only on the algorithm, not the hardware used to run the algorithm.
+
+5. Big O notatation is everywhere. Get lots of practice!
 
 
-**Logarithm**: The opposite of an exponent.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
