@@ -31,7 +31,7 @@ class DoublyLinkedList {
       this.tail = newNode;         // the new node is the tail    
     }
     this.length++;
-    return list;
+    return this;
   }
 
   // pop- remove end/tail of linked list. 0(1)
