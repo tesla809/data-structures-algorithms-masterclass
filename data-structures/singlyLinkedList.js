@@ -13,6 +13,7 @@ class SinglyLinkedList {
     this.length = 0;
   }
 
+  // push()- add node to end of list O(1)
   push(data) {
     let newNode = new Node(data);
     if (!this.head) {              // add 1st node to empty singly linked list
@@ -70,7 +71,7 @@ class SinglyLinkedList {
 
   // add new head to list- O(n)
   unshift(data) {
-    if (!data) return undefined;  // if not handled, will increment when nothing passed
+    if (data === undefined) return undefined; // if not handled, will increment when nothing passed
 
     let newNode = new Node(data);
     if (!this.head) {             // if no head aka length equals 0
