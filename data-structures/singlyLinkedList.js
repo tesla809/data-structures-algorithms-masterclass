@@ -69,7 +69,7 @@ class SinglyLinkedList {
     return removedHead;
   }
 
-  // add new head to list- O(n)
+  // add new head to list- O(1)
   unshift(data) {
     if (data === undefined) return undefined; // if not handled, will increment when nothing passed
 
