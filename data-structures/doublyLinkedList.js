@@ -94,9 +94,8 @@ class DoublyLinkedList {
     if (index === 0) return this.head;                   // return head if 0
     if (index === this.length - 1 ) return this.tail;    // return tail if last index
 
-    let counter;                          // 0 based index
-    let currentNode;
-    if (index < this.length / 2) {        // is it close to head or tail?
+    let counter, currentNode;
+    if (index <= this.length / 2) {        // is it close to head or tail?
       counter = 0;
       currentNode = this.head;            // start off at head
       while (counter !== index) {
@@ -113,17 +112,27 @@ class DoublyLinkedList {
     }
     return currentNode;         // bounded by top if statement, so will be found in range
   }
+
+  // retrieve node by its position in linked list- O(n)
+  set(index, data) {
+    if (data === undefined) return undefined;  // needs data input
+    
+    let foundNode = this.get(index);    // re-use get(). 
+    if (foundNode) {
+      foundNode.data = data;            // Pro tip: easier if you update data prop inside node 
+      return true;                      // instead of having to replace node 
+    }
+    return false;
+  }
 }
+
 const list = new DoublyLinkedList();
 list.push(0);
 list.push(1);
 list.push(2);
-list.push(3);
-list.push(4);
-list.push(5);
-// list.push(6);
-const x = list.get(4);
-console.log(x.data);
+const x = list.set(0, 'yo');
+console.log(list);
+console.log(x);
 
 // let node1 = new Node(1);  // testing Node class
 // let node2 = new Node(2);
