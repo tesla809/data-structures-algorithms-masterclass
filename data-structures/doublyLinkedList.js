@@ -166,6 +166,27 @@ class DoublyLinkedList {
   }
 }
 
+/*
+Overview:
+  Insertion/Removal: 
+    Best: O(1)
+    Worst: O(N)
+    Note, act of inserting/removing is O(1)
+    but still needs to traverse to find node, so O(N).
+  Searching/Access:
+    Best: O(1)
+    Worst: O(N)
+
+  Recap:
+  Doubly Linked Lists are almost identical to Singly Linked Lists,
+  except that tehre is an addiitonal an pointer to the previous node.
+  
+  Better than Singly Linked Lists for finding nodes.
+  They are done in half the time.
+
+  Downside is that they take up more memory due to extra pointer.
+*/
+
 const list = new DoublyLinkedList();
 list.push(0);
 list.push(1);
