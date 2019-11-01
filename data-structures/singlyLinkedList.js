@@ -103,7 +103,7 @@ class SinglyLinkedList {
 
   // retrieve node by its position in linked list- O(n)
   set (index, data) {
-    if (!data) return null;    // needs data input
+    if (data === undefined) return undefined;    // needs data input
 
     let foundNode = this.get(index);
     if (foundNode) {
