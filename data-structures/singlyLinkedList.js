@@ -112,7 +112,9 @@ class SinglyLinkedList {
     return false;
   }
 
-  // adding a new node at specified position in linked list- O(n)
+  // adding a new node at specified position in linked list
+  // O(n) to traverse, O(1) to insert
+  // array is O(n) to insert (needs re-indexing), O(1) to access
   insert(index, data) {
     if (index < 0 || index > this.length) return false; // handle out of bounds
 
@@ -130,8 +132,8 @@ class SinglyLinkedList {
   // remove and return element based on its index position- O(n)
   remove(index) {
     if (index < 0 || index >= this.length) return false;  // if out of range -> false
-    if (index === 0) return this.shift();               // if heads. !! turns value into boolean
-    if (index === this.length - 1) return this.pop();   // if tail. 
+    if (index === 0) return this.shift();                 // if heads. !! turns value into boolean
+    if (index === this.length - 1) return this.pop();     // if tail. 
     
     let prevNode = this.get(index - 1);                   // Get node before index, since we don't have backwards pointer
     let removedNode = prevNode.next;                      // get target node to return
@@ -139,14 +141,68 @@ class SinglyLinkedList {
     this.length--;                                        // prevNode -> prevNode.next.next (skipped target)
     return removedNode;
   }
+  // reverse linked list in place- O(n)
+  // no copy or duplicate made- traverse and reverse
+  // insert head node between tail and node right after tail len - 1 times.
+  altReverse(){
+    if (this.length <= 1) return this; // corner case of 1 or less times
+    if (this.length === 2) {          // corner case of 2 items only
+      this.push(this.shift());        // take head and push to end of list
+      return this;                    // needed to avoid logic error below since only 2 times
+    }
+    let counter = 0; 
+    let newTail = this.head           // take old head and turn to new tail
+    let anchorNode = this.tail;       // start postion to insert
+    let prevNode = null;              // end position to insert
+    let movedNode = null;             // node to be inserted betwen start and end
+    while (counter < this.length - 1) {
+      movedNode = this.shift();       // remove head
+      anchorNode.next = movedNode;    // add after tail/anchor node
+      movedNode.next = prevNode;      // add to node right after it, aka sandwich it in middle
+      prevNode = movedNode;           // will be new end position to insert movedNode before.
+      counter++;
+      this.length++;                  // needed to counter reduction of length with shift
+    }
+    this.tail = newTail;
+    return this;
+  }
+  // alternative way to do reverse
+  // basically flipping pointer backwards by setting .next to prev
+  // and moving forward by moving prev and node thru each node
+  reverse() {
+    let node = this.head;     // switch head and tail nodes
+    this.head = this.tail;
+    this.tail = node;
+    let next = null;
+    let prev = null;          // tail needs to be null at the end
+    for (let i = 0; i < this.length; i++) {
+      next = node.next;
+      node.next = prev;
+      prev = node;            // move one node over
+      node = next;
+    }
+  }
+  // dev helper method to visualize linked list
+  print() {
+    let arr = [];
+    let current = this.head;
+    while (current) {
+      arr.push(current.data);
+      current = current.next;
+    }
+    console.log(arr);
+  }
 }
 const list = new SinglyLinkedList();
-list.push(0);
 list.push(1);
 list.push(2);
-let x = list.remove(1);
-console.log(x);
+list.push(3);
+list.push(4);
+list.print();
+list.reverse();
+list.print();
 console.log(list);
+
 
 // not efficent way to write linked list
 // let firstNode = new Node("Hi");
