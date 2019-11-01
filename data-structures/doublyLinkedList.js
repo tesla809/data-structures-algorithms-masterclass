@@ -70,7 +70,7 @@ class DoublyLinkedList {
     return removedHead;
   }
   
-  // add new head to list- O(n)
+  // add new head to list- O(1)
   unshift(data) {
     if (data === undefined) return undefined; // if no value passed in, return undefined
 
@@ -113,16 +113,56 @@ class DoublyLinkedList {
     return currentNode;         // bounded by top if statement, so will be found in range
   }
 
-  // retrieve node by its position in linked list- O(n)
+  // retrieve node by its position in linked list- 
+  // O(n) to search, O(1) to replace
   set(index, data) {
     if (data === undefined) return undefined;  // needs data input
     
-    let foundNode = this.get(index);    // re-use get(). 
+    let foundNode = this.get(index);           // re-use get(). 
     if (foundNode) {
-      foundNode.data = data;            // Pro tip: easier if you update data prop inside node 
-      return true;                      // instead of having to replace node 
+      foundNode.data = data;                   // Pro tip: easier if you update data prop inside node 
+      return true;                             // instead of having to replace node 
     }
     return false;
+  }
+
+  // insert()- adding a new node at specified position in linked list
+  // O(n) to traverse, O(1) to insert
+  // array is O(n) to insert (needs re-indexing), O(1) to access
+  insert(index, data) {
+    if (data === undefined) return undefined;             // needs data input
+    if (index < 0 || index > this.length) return false;   // handle out of bounds
+    if (index === 0) return !!this.unshift(data);         // if head add to front. !! creates boolean that is returned
+    if (index === this.length) return !!this.push(data);  // if beyond tail, added to end
+
+    let newNode = new Node(data);
+    let afterNode = this.get(index);       // re-use get()
+    let preNode = afterNode.prev;
+
+    preNode.next = newNode;     // preNode -> newNode
+    newNode.prev = preNode;     // preNode <- newNode, now preNode <->newNode
+    newNode.next = afterNode;   // newNode -> afterNode
+    afterNode.prev = newNode;   // newNode <- afterNode, now preNode <-> newNode <-> afterNode
+    this.length++;
+    return true;
+  }
+  // remove()- remove element from list w/ index.
+  // O(n) to traverse, O(1) to remove
+  remove(index) {
+    if (index < 0 || index >= this.length) return false;   // if out of range -> false
+    if (index === 0) return this.shift();                  // if heads.
+    if (index === this.length - 1) return this.pop();      // if tail.
+    
+    let removedNode = this.get(index); 
+    let preNode = removedNode.prev;
+    let afterNode = removedNode.next;
+
+    preNode.next = afterNode;     // pre -> after 
+    afterNode.prev = preNode;     // pre <- after, so pre <-> after 
+    removedNode.next = null;      // clean up foundNode pointers
+    removedNode.prev = null;
+    this.length--;
+    return removedNode;   
   }
 }
 
@@ -130,10 +170,8 @@ const list = new DoublyLinkedList();
 list.push(0);
 list.push(1);
 list.push(2);
-const x = list.set(0, 'yo');
-console.log(list);
+const x = list.remove(1);
 console.log(x);
-
 // let node1 = new Node(1);  // testing Node class
 // let node2 = new Node(2);
 // node1.next = node2;       // linking nodes bi directionally
