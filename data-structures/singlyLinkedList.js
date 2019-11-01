@@ -127,18 +127,25 @@ class SinglyLinkedList {
     this.length++;
     return true;                                        // so prevNode -> newNode -> currentNode
   }
-
+  // remove and return element based on its index position- O(n)
   remove(index) {
-    let prevNode = this.get(index - 1);   // get node before index
-    prevNode.next = prevNode.next.next;   // remove node by setting prev to node after target index 
-    return true;
+    if (index < 0 || index >= this.length) return false;  // if out of range -> false
+    if (index === 0) return this.shift();               // if heads. !! turns value into boolean
+    if (index === this.length - 1) return this.pop();   // if tail. 
+    
+    let prevNode = this.get(index - 1);                   // Get node before index, since we don't have backwards pointer
+    let removedNode = prevNode.next;                      // get target node to return
+    prevNode.next = prevNode.next.next;                   // remove node by skipping over target. Set prev to node after target index. 
+    this.length--;                                        // prevNode -> prevNode.next.next (skipped target)
+    return removedNode;
   }
 }
 const list = new SinglyLinkedList();
 list.push(0);
 list.push(1);
 list.push(2);
-list.remove(2);
+let x = list.remove(1);
+console.log(x);
 console.log(list);
 
 // not efficent way to write linked list
