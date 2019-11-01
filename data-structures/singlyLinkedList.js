@@ -117,8 +117,8 @@ class SinglyLinkedList {
   // O(n) to traverse, O(1) to insert
   // array is O(n) to insert (needs re-indexing), O(1) to access
   insert(index, data) {
-    if (index < 0 || index > this.length) return false; // handle out of bounds
-
+    if (data === undefined) return undefined;             // needs data input
+    if (index < 0 || index > this.length) return false;   // handle out of bounds
     if (index === 0) return !!this.unshift(data);         // if head add to front. !! creates boolean that is returned
     if (index === this.length) return !!this.push(data);  // if beyond tail, added to end
 
