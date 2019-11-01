@@ -194,6 +194,63 @@ class SinglyLinkedList {
     console.log(arr);
   }
 }
+
+/*
+  Overview:
+  Insertion/Removal: 
+    Best: O(1)
+    Worst: O(N)
+    Note, act of inserting/removing is O(1)
+    but still needs to traverse to find node, so O(N).
+  Searching/Access:
+    Best: O(1)
+    Worst: O(N)
+
+  Recap:
+  Singly Linked Lists are excellent alternative to arrays 
+  when inserting or deleting at the beginning or end 
+  is frequent.
+
+  The idea of list data structure that consists of nodes
+  is the foundation for other data structures like 
+  Stack and Queues.
+
+  Arrays contain a built in index, since the entire array
+  is placed together in memory. 
+
+  Because of this, the computer has to specify the amount
+  of space needed upfront. In JavaScript, this is done behind the scenes.
+
+  However, because of this arrays allow for random access, 
+  so one can get nth element in constant time, O(1).
+
+  If we need more than what was allocated, we have to copy 
+  the entire array and place it into another array with more space.
+  Thats O(n) time.
+
+  If we remove an element from the beginning of an array, 
+  we have to re-index the entire array.
+  This takes O(n) time.
+  Again JavaScript does this behind the scenes for us.
+
+  Arrays are good for when you know how much data you will
+  have upfront or need random access in constant time.
+
+  Both Singly and Doubly Linked Lists don't need specific
+  chunk of memory upfront. Instead they can grow dynamically,
+  without the need to re-allocate memory.
+
+  The downside is that to get to anything besides the head or tail,
+  requires traversing the linked list which is O(n).
+
+  Getting the head or tail is constant time O(1).
+
+  Adding to beginning or end of linked list is O(1)
+
+  Adding/removing elements into middle of Linked Lists is O(1),
+  but since no random access to search, it is and additional O(n).
+*/
+
 const list = new SinglyLinkedList();
 list.push(1);
 list.push(2);
