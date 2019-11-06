@@ -13,23 +13,66 @@ class Queue {
     this.size = 0;
   }
 
-  enqueue() {
+  // adds to rear of queue aka line- O(1)
+  // pretty much same logic as singly linked list's push()
+  enqueue(data) {
     let newNode = new Node(data);
-    if (!this.first) {              // add 1st node to empty singly linked list
-        this.first = newNode;       // its both the first and last
+    if (!this.first) {             // add 1st node to empty singly linked list
+        this.first = newNode;      // its both the first and last
         this.last = newNode;       // since n = 1
     } else {                       // if greater than 1
       this.last.next = newNode;    // set last to next node
       this.last = newNode;         // the new node is the laste         
     }
-    this.size++;                // like before increment by 1
-    return this;                  // return linked list
+    this.size++;                   // like before increment by 1
+    return this;                   // return linked list
   }
 
+ // removes from front of queue aka line- O(1)
+ // pretty much same logic as singly linked list's shift() or stack's pop()
   dequeue() {
-    
+    if (!this.first) return null;  // if no first, then can't shift.
+
+    let removedFirst = this.first;
+    // removedFirst.next = null;  garbage collecting in js cleans up, b/c old first will not be used.
+    if (this.first === this.last) {   // only 1 element left?
+      this.last = null;               // set last to null to avoid it being populated w/ last item
+    }
+    this.first = this.first.next;     // set to null or next element
+    this.size--;
+    return removedFirst;
+  }
+
+  getFront() {
+    return this.first;
+  }
+  
+  getSize() {
+    return this.size;
+  }
+
+  isEmpty() {  
+    return this.size === 0 ? true : false;
   }
 }
+
+let queue = new Queue();
+queue.enqueue("First");
+queue.enqueue("Second");
+queue.enqueue("Third");
+
+console.log(queue);
+console.log(queue.getSize());
+console.log(queue.isEmpty());
+console.log(queue.getFront());
+
+const x = queue.dequeue();
+const y = queue.dequeue();
+const z = queue.dequeue();
+
+console.log(queue.getSize());
+console.log(queue.isEmpty());
+
 
 /*
 Queues ADT
@@ -42,6 +85,7 @@ first person served/leaves.
 
 FIFO principle- first in, first out.
 
+
 Methods:
 all methods are O(1)
 enqueue()- add to back/tail
@@ -49,9 +93,14 @@ dequeue()- remove and return from head
 front/peak()- return head, but don't remove
 isEmpty()- check if empty 
 
+O(N)
+seaching/access: not necessary for queue.
+
 Queue essentials:
 Enqueue and dequeue are essential for a queue. 
 Elements must be added from rear and removed from front.
+If we want to search, we would have to consider another
+data structure.
 
            -------
 Enqueue ->          Dequeue ->
@@ -65,6 +114,8 @@ Used in scenarios where there is a shared resource,
 but the resource can only handle one request at a time.
 
 The request that comes first, gets served first.
+
+Queues are foundational for more complex data structures.
 
 Used in printer jobs, processor for computer,
 network requests, scheduling, 
