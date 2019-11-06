@@ -99,6 +99,13 @@ Top() - peek the top, don't remove
 isEmpty() - true/false
 length() - amount of elements
 
+The two main things that you have to care about
+in a stack are push() and pop().
+
+These are O(N)
+Searching- look for element
+Access- accessing element
+
 Uses:
 Function calls/Recursion
 Browser history
