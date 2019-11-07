@@ -12,6 +12,23 @@ a link or reference to another node (its children).
 Principle: 
 Trees are useful to represent hierarchical data. 
 
+They look like this:
+      *
+    /   \
+    *    *
+  / \   / |\
+  *  * * * *
+    /\  ...
+    ...
+
+The asterisks represent nodes. 
+The node at the top is the root, the tree's ``starting point.
+The arcs between nodes are called branches. 
+A node that has no branches underneath it is called a leaf. 
+
+Real trees grow from their root upwards to the sky,
+but computer-science trees grow from the root downwards.
+
 Advantages of Trees:
 - Useful to reflect structural relationship in data
 - Useful to represent hierarchies
@@ -66,6 +83,7 @@ elements(): returns all elements
 positions: returns all postions/nodes
 swapElements(n, m): swaps elements at two nodes
 replaceElement(n, r): replaces element of node
+insertion(n): inserts an element
 
 Utility methods:
 isInternal(n): check if node is internal
@@ -139,22 +157,12 @@ Types of trees:
     - data aka keys
     - address of left child
     - address of right child 
-  
-  Ordered in a specific way:
-    - Each node contains only 1 key/data
-    - The keys in the left subtree are less than 
-    keys in parent node. Left < Parent.
-    - The keys in the right subtree are greater than 
-    the key in its Parent node. Parent < Right.
-    - Duplicate keys are not allowed.
-    
-    Left < Parent < Right
 
-  1a. Full binary tree:
+1a. Full binary tree:
     A binary tree in which each node 
     has exactly zero or two children.
 
-  1b. Complete binary tree:
+1b. Complete binary tree:
   a binary tree which is completely filled, with 
   the possible exception of the bottom level, 
   which is filled from left to right.
@@ -164,11 +172,54 @@ Types of trees:
 
   Its height is at most O(log(n))
 
+2. Binary search tree
+  Not all binary trees are binary search trees.
+  They have to be ordered in a specific way.
+
+  Ordered in a specific way:
+    - Each node contains only 1 key/data
+    - The keys in the left subtree are less than 
+    keys in parent node. Left < Parent.
+    - The keys in the right subtree are greater than 
+    the key in its Parent node. Parent < Right.
+    - Duplicate keys are not allowed.
+    Left < Parent < Right
+
+    Less than values go on left
+    Greater than values go on right.
+
 2. Trie:
   Useful for storing dictionaries.
   Fast and efficent for dynamic spell checking.
 
 Usage of each depends on the scenario.
+
+What is binary search?
+A binary search is an algorithm that simplifies 
+and speeds up searching through a sorted collection. 
+It does this by dividing the search set into two groups 
+and comparing an element to one that is larger or smaller 
+than the one you’re looking for.
+
+Basically, your elements are organized by value.
+Then you ask, is it bigger or smaller? 
+Whatever the answer is, you know that the other
+half of the values do not contain your value. 
+So you can discard that and repeat the process
+until you find your value.
+
+We continuly half our search space,
+until we find our value.
+That means O(log(n)).
+
+This is better than checking each element linearly O(n).
+
+Divide and conquer with binary search on a sorted array
+is the same as a binary search tree. 
+
+But its easier to add elements to a binary search tree, 
+since at some point you'd have to re-index an array
+due to running out of allocated memory.
 
 How to choose data structure?
 Choice depends on:
@@ -199,15 +250,64 @@ Since a tree is non linear structure, there no unique traversal method.
 
 Two types with different methods:
 1. Depth-first traversal: Go deep
-  PreOrder: visit the parent first and then left and right children
+  PreOrder: visit the parent first and then left and right children.
+  Root, then left, then right. 
 
   InOrder: visit the left child, then the parent and the right child
-  
+  Left, then current node, right.
+
   PostOrder: visit left child, then the right child and then the parent
+  Left, then right, then root last.
 
 2. Breath-first traveral: Go wide
   LevelOrder: This traversal visits nodes by levels from 
     top to bottom and from left to right.
+
+In binary search trees:
+  We like InOrder traversal: 
+    allows the nodes to be printed in order.
+    Since left is less than right side.
+
+Binary search trees:
+searching():
+  Searching always starts in root.
+  Compare data stored in root with key/data
+  of node that we are searching for.
+
+  If the node doesn't contain the key, 
+  we either proceed to left of right child
+  depending on comparison.
+
+  If negative go left (since left has smaller elements)
+  If positive, go right.
+
+  Binary search trees are recursive, so one 
+  can use a recursive algorithm.
+
+  Best case O(log(n))
+  Worst case O(h), h = height of tree
+    Can degenerate to a linked list 
+    (if not balanced), so then it becomes
+    O(n).
+
+insertion():
+  If the element is in the tree,
+  we avoid entering duplicates
+
+  If so, we insert it using traversal
+  and adding replacing a null pointer
+  of the leaf.
+
+  Best case O(log(n))
+  Worst case O(h), h = height of tree
+    Can degenerate to a linked list 
+    (if not balanced), so then it becomes
+    O(n).
+
+deletion():
+  Trickier than insertion.
+
+
 
 Usages:
 - DOM in HTML
@@ -216,6 +316,13 @@ Usages:
 - Network routing algorithms
 - Spell checking w/ tries
 - Where hierarchaical data is needed
+
+
+Uses of binary search trees:
+- Databases
+  Used in indexing to retrieve and return correct row
+- git bisect
+
 
 Useful sources:
 CS at CMU:
