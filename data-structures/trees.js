@@ -32,49 +32,61 @@ class BinarySearchTree {
     }
     return this;  // if no case matches, return BST. handles duplicate numbers
   }
-  
-  // insert(data, prevNode) {      // recursive solution
-  //   let node = new Node(data);  // create new data
-  //   let currentNode = prevNode === undefined ? this.root : prevNode; // no prevNode? Start at root. 
 
-  //   if (this.root === null) {  // if no root, set to root
-  //     this.root = node;
-  //   } else if (node.data < currentNode.data) {  // if data less than node data
-  //       if (currentNode.left) {                 // if left node exists,
-  //         currentNode = currentNode.left;       // update currentNode to left
-  //         return this.insert(node.data, currentNode);  // recursively call again
-  //       }
-  //       else {
-  //         currentNode.left = node;              // if left node doesn't exist, set to node
-  //       }
-  //   } else if (node.data > currentNode.data) {  // if data greater than node data
-  //       if (currentNode.right) {                // if right node exists,
-  //         currentNode = currentNode.right;      // update currentNode to right
-  //         return this.insert(node.data, currentNode);   // recursively call again                    
-  //       } else {
-  //         currentNode.right = node;             // if right node doesn't exist, set to node 
-  //       }
-  //   }  
-  //   return this;  // if no case matches, return BST. handles duplicate numbers
-  // }
+  find(data, prevNode) {  // find and return node, else -1
+    if (this.root === null) {  // if no root, nothing to search
+      return undefined;
+    }
+
+    let node = new Node(data);  // create new data
+    let currentNode = prevNode === undefined ? this.root : prevNode; // no prevNode? Start at root. 
+    let dir; 
+
+    dir = node.data < currentNode.data ? 'right' : 'left';
+    
+    if (this.root.data === data) {
+      console.log('FOUND IN ROOT');
+      return this.root;
+    }
+
+    if (currentNode[dir]) {
+      if (currentNode[dir].data === data) {
+        console.log('FOUND DATA', currentNode[dir].data);
+        return currentNode[dir];
+      } else {
+        currentNode = currentNode[dir];      // update currentNode to direction
+        return this.find(node.data, currentNode);   // recursively call again   
+      }
+    }
+
+    return false;  // if no conditions met, not found, return false
+  }
 
   getTree() {
     return this;
   }
 
-  show() {
+  getRoot() {
+    return this.root;
+  }
+  showTree() {
     console.log(this.getTree());
+  }
+
+  showRoot() {
+    console.log(this.getRoot());
   }
 }
 
 const newBST = new BinarySearchTree();
 newBST.insert(10);
 newBST.insert(11);
-newBST.insert(2);
 newBST.insert(7);
-newBST.insert(16);
-newBST.insert(10);
-newBST.show();
+newBST.insert(2);
+
+// let foundNode = newBST.find(100);
+let test = newBST.remove(10);
+console.log(test);
 
 
 /*
