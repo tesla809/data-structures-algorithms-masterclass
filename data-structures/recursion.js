@@ -582,6 +582,48 @@ console.log('pStringifyNumbers: ', pStringifyNumbers);
 const rStringifyNumbers = recursiveStringifyNums(obj2);
 console.log('rStringifyNumbers: ',rStringifyNumbers); 
 
+// collectStrings
+/*
+Write a recursive function 
+called collectStrings an object 
+and returns 
+which accepts an array of all the values of the object 
+with type string
+*/
+const objCollectString = {
+  stuff: "foo",
+  data: {
+      val: {
+          thing: {
+              info: "bar",
+              moreInfo: {
+                  evenMoreInfo: {
+                      weMadeIt: "baz"
+                  }
+              }
+          }
+      }
+  }
+}
+
+// using recursion
+const recursiveCollectStrings = obj => {
+  let stringArr = [];
+
+  const helper = o => {
+    for (let prop in o) {
+      if (typeof o[prop] === 'string') stringArr.push(o[prop]);  // basecase: if string, collect in array 
+      else if (typeof o[prop] === 'object' && typeof o[prop]!== null) helper(o[prop]);  // if object, recurse
+    }
+  }
+  helper(obj);
+  return stringArr;
+}
+
+const rCollectStringsResults = recursiveCollectStrings(objCollectString);
+console.log('rCollectStringsResults: ', rCollectStringsResults);
+
+
 
 
 /*
