@@ -1,6 +1,9 @@
 // Trees
 // implement a binary search tree
 
+// Note: self balancing trees can be
+// implemented with AVL trees
+
 class Node {
   constructor(data, left, right){
     this.data = data;
@@ -14,6 +17,7 @@ class BinarySearchTree {
     this.root = null;  // only one important property
   }
 
+  // O(log(n)) - base 2 - not guaranteed
   insert(data, prevNode) {      // recursive solution
     let node = new Node(data);  // create new data
     let currentNode = prevNode === undefined ? this.root : prevNode; // no prevNode? Start at root. 
@@ -33,9 +37,10 @@ class BinarySearchTree {
     return this;  // if no case matches, return BST. handles duplicate numbers
   }
 
+  // O(log(n)) - base 2 - not guaranteed
   find(data, prevNode) {  // find and return node, else -1
     if (this.root === null) {  // if no root, nothing to search
-      return undefined;
+      return false;
     }
 
     let node = new Node(data);  // create new data
@@ -62,6 +67,22 @@ class BinarySearchTree {
     return false;  // if no conditions met, not found, return false
   }
 
+  contains(data) {  // checks to see if data exists
+    if(this.root === undefined) return undefined;
+    let current = this.root,
+        found = false;
+    while(current && !found) {
+      if (data < current.data) {
+        current = current.left;
+      } else if (data > current.data) {
+        current = current.right;
+      } else {
+        return true;
+      }
+    }
+      return false;
+  }
+
   getTree() {
     return this;
   }
@@ -84,9 +105,10 @@ newBST.insert(11);
 newBST.insert(7);
 newBST.insert(2);
 
-// let foundNode = newBST.find(100);
-let test = newBST.remove(10);
+let test = newBST.remove(11);
 console.log(test);
+
+newBST.showTree();
 
 
 /*
