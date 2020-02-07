@@ -478,6 +478,12 @@ the sum of all even numbers in an object
 which MAY contain nested objects
 */
 
+/* 
+Come back to this later on and figure out 
+how to do pure and iterative versions of this.
+For now, save time and work on other problems
+*/
+
 const obj1 = {
   outer: 2,
   obj: {
@@ -495,7 +501,7 @@ var obj2 = {
   b: {b: 2, bb: {b: 3, bb: {b: 2}}},
   c: {c: {c: 2}, cc: 'ball', ccc: 5},
   d: 1,
-  e: {e: {e: 2}, ee: 'car'},
+  e: {e: {e: 2}, ee: 'car'}
 };
 
 const recursiveNestedEvenSum = obj => {
@@ -520,9 +526,63 @@ const recursiveNestedEvenSum = obj => {
 const rNestedEvenSum = recursiveNestedEvenSum(obj2);
 console.log('rNestedEvenSum: ', rNestedEvenSum); 
 
-// Come back to this later on and figure out how to 
-// do pure and iterative versions of this
-// For now, save time and work on other problems
+// stringifyNumbers
+/*
+Write a recursive function 
+which takes in an object,
+finds all the values which are numbers,
+and converts them to strings. 
+*/
+
+const stringifyNumbersUsingParsing = obj => {
+  const newObj = obj => { 
+    let regex = /[0-9]+/g;
+    let str = JSON.stringify(obj)
+      .replace(regex, x => `"${x}"`);
+    let fixedObj = JSON.parse(str);
+    return fixedObj;
+  }
+  return newObj(obj);
+}
+
+// recursive solution
+// mutating the values and only change whats needed
+// use recursion to go deep. iteration to go wide.
+const mRecursiveStringifyNums = obj => {
+  for (let prop in obj) {
+    if (typeof obj[prop] === 'object' && obj[prop] !== null) {   // check if object
+      recursiveStringifyNums(obj[prop]); // recursive part
+    } 
+    else if (typeof obj[prop] === 'number') obj[prop] = obj[prop].toString();
+    // otherwise, don't mutate
+  }
+  return obj;
+}
+
+// non mutating
+const recursiveStringifyNums = obj => {
+  let o = Object.assign({}, obj);  // declared outside scope of recursion to keep memory of changes and avoid resets
+
+  const helper = o => {  // needs helper() with value declared outside recursion. If not, recursion will reset value, since its when defined at start.
+    for (let prop in o) {
+      if (typeof o[prop] === 'object' && o[prop] !== null) {   // check if object
+        helper(o[prop]); // recursive part
+      } 
+      else if (typeof o[prop] === 'number') o[prop] = o[prop].toString();
+      // otherwise, don't mutate
+    }
+    return o;
+  }
+  return helper(o);
+}
+
+const pStringifyNumbers = stringifyNumbersUsingParsing(obj2);
+console.log('pStringifyNumbers: ', pStringifyNumbers); 
+
+const rStringifyNumbers = recursiveStringifyNums(obj2);
+console.log('rStringifyNumbers: ',rStringifyNumbers); 
+
+
 
 /*
 Note:
